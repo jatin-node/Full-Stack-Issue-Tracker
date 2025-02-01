@@ -1,0 +1,37 @@
+# Node modules
+/node_modules/
+
+# Environment variables file
+.env
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories (e.g. for Docker, testing)
+/coverage
+
+# Build output (if any)
+/dist
+/build
+
+# IDE or editor files (e.g. VSCode, IntelliJ, etc.)
+.vscode/
+.idea/
+
+# System files (e.g. MacOS, Windows)
+.DS_Store
+Thumbs.db
+
+# npm package manager cache
+.npm/
+
+# Temporary files (like swap files or backups)
+*.swp
+*~
+
+# Operating system files
+*.bak
+*.tmp

@@ -9,7 +9,7 @@ import { AuthContext } from "../context/AuthContext";
 const MyIssues = () => {
   const { auth } = useContext(AuthContext);
   const [filterClick, setFilterClick] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(""); // State to hold the selected category
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   let categories = ["admin", "HR", "open", "in-progress", "resolved"];
 
@@ -29,13 +29,13 @@ const MyIssues = () => {
   });
 
   const handleClick = (category) => {
-    setSelectedCategory(category); // Update the selected category
-    setFilterClick(false); // Close the filter dropdown after selection
+    setSelectedCategory(category);
+    setFilterClick(false);
   };
 
   const handleClearFilters = () => {
-    setSelectedCategory(""); // Reset the selected category to remove the filter
-    setFilterClick(false); // Close the filter dropdown if open
+    setSelectedCategory("");
+    setFilterClick(false);
   };
 
   const handleOutsideClick = (e) => {

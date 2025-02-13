@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
 import InputBox from "./InputBox";
-import googlelogo from "../assets/google-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import ReactSelectDropdown from "./ReactSelectDropdown";
 import { emailRegex, passwordRegex } from "../utils/validation";
@@ -10,7 +9,6 @@ import { AuthContext } from "../context/AuthContext";
 import AnimationWrapper from "./AnimationWrapper";
 
 const Auth = ({ type }) => {
-  console.log(type);
   const characterlimit = 200;
   const navigate = useNavigate();
   const [islock1, setislock1] = useState(true);
@@ -41,7 +39,6 @@ const Auth = ({ type }) => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
       const { token, user } = response.data;
       setAuth({ token, user });
       localStorage.setItem("user", JSON.stringify(user));
@@ -109,7 +106,6 @@ const Auth = ({ type }) => {
       };
 
       // Validation for empty fields
-      // if (!additionalData.role) return toast.error("Select a role");
       if (!additionalData.employeeId) return toast.error("Enter Employee ID");
       if (!additionalData.quarterNumber)
         return toast.error("Enter Quarter Number");
@@ -344,7 +340,6 @@ const Auth = ({ type }) => {
   return (
     <AnimationWrapper type={type}>
       <section className="w-full mt-24 h-[calc(100vh-100px)] overflow-auto flex justify-center items-center relative bg-white md:bg-[#F8F8F8]">
-        {/* <AnimationWrapper type="form"> */}
           <div className="w-[95%] absolute top-20 max-w-[500px] rounded-2xl bg-white md:shadow-lg p-5 md:p-10 -mt-10">
             <h1
               className={` ${type === "details" ? "hidden" : "text-4xl"} capitalize font-bold`}
@@ -371,7 +366,6 @@ const Auth = ({ type }) => {
               {type === "log-in" && renderLogInForm()}
             </form>
           </div>
-        {/* </AnimationWrapper> */}
       </section>
     </AnimationWrapper>
   );

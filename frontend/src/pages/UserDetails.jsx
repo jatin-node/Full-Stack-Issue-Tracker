@@ -7,13 +7,11 @@ import AnimationWrapper from "../components/AnimationWrapper";
 
 const UserDetails = () => {
   const { userId } = useParams();
-  console.log(userId);
   const dispatch = useDispatch();
   const users = useSelector((state) => state.requestsReducer.users);
-  console.log("getUser", users);
 
   useEffect(() => {
-    dispatch(fetchUsers(null, null, userId)); // Fetch users when component mounts
+    dispatch(fetchUsers(null, null, userId));
   }, [dispatch]);
   return users ? (
     <AnimationWrapper>

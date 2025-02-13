@@ -63,7 +63,6 @@ const issueSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
-    // ...existing code...
   },
   {
     timestamps: true,

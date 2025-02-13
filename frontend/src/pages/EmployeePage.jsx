@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchRequests } from "../store/actions/requestsAction";
 import RequestCard from "../components/RequestCard";
 import NoDataMessage from "../components/NoDataMessage";
-import Dropdown from "../components/Dropdown";
 
 const EmployeePage = ({ type }) => {
   const { auth } = useContext(AuthContext);
@@ -33,7 +32,6 @@ const EmployeePage = ({ type }) => {
   useEffect(() => {
     dispatch(fetchRequests(null, null, auth.user._id));
   }, [dispatch]);
-  console.log(allPendingRequests);
   return (
     <AnimationWrapper>
       <div className="w-full my-24 h-full p-3 flex flex-col justify-center overflow-auto ">

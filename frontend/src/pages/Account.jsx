@@ -9,7 +9,7 @@ import { AuthContext } from "../context/AuthContext";
 
 const Account = () => {
   const navigate = useNavigate();
-  const { auth, setAuth } = useContext(AuthContext);
+  const { setAuth } = useContext(AuthContext);
 
   const [edit, setEdit] = useState(false);
   const [passwordEdit, setpasswordEdit] = useState(false);
@@ -77,12 +77,11 @@ const Account = () => {
         { withCredentials: true }
       );
 
-      toast.success("Account details updated successfully!"); // Display success toast
-      console.log(response.data); // Handle response
+      toast.success("Account details updated successfully!");
       setEdit(false); // Disable editing after submit
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data || error.message); // Display error toast
+      toast.error(error.response?.data || error.message);
     }
   };
 
@@ -110,7 +109,7 @@ const Account = () => {
         { password: formData.password },
         { withCredentials: true }
       );
-      toast.success("Password updated successfully!"); // Display success toast
+      toast.success("Password updated successfully!");
       setEdit(false); // Disable editing after submit
       setpasswordEdit(false);
     } catch (error) {
@@ -127,45 +126,35 @@ const Account = () => {
         toast.error("Please select an image!");
         return;
       }
-  
+
       const formData = new FormData();
       formData.append("image", fileInput.files[0]);
-      
-      
-      // Send POST request to the server
+
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/update/profile/image",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
-          withCredentials: true, // Ensure credentials are sent if needed
+          withCredentials: true,
         }
       );
-  
-      toast.dismiss(loader);  
+
+      toast.dismiss(loader);
       toast.success("Profile image updated successfully!");
-  
-      // Assuming your backend responds with the new image URL in 'response.data.imageUrl'
-      const newImageUrl = response.data.imageUrl;  // Adjust based on your backend response
+
+      const newImageUrl = response.data.imageUrl;
       setAuth((prevAuth) => ({
         ...prevAuth,
         user: { ...prevAuth.user, profile_img: newImageUrl },
       }));
-      
-      console.log("New profile image URL:", newImageUrl);
-  
-      // Optionally update the UI with the new profile image URL
-  
-      fileInput.value = ""; // Clear the input field for a clean slate
+
+      fileInput.value = "";
     } catch (error) {
       toast.dismiss(loader);
       console.error("Error uploading profile image:", error);
       toast.error("Failed to upload image. Please try again.");
     }
   };
-  
-  
-  
 
   useEffect(() => {
     fetchUserDetails();
@@ -177,22 +166,23 @@ const Account = () => {
         <Toaster />
 
         <div className="relative w-full max-w-[800px] h-full flex flex-col gap-5">
-  <div className="text-xl md:text-2xl font-semibold border-[1px] w-full p-5 bg-zinc-100 text-black rounded-xl flex flex-col items-center">
-    <label htmlFor="profileImage" className="cursor-pointer text-red-500 flex items-center gap-2">
-      <i className="mt-1 fi fi-sr-file-edit"></i>
-      <span>Upload Profile Image</span>
-    </label>
-    <input
-      type="file"
-      id="profileImage"
-      accept="image/*"
-      className="hidden"
-      onChange={handleProfileImageUpload}
-    />
-  </div>
-</div>
-
-
+          <div className="text-xl md:text-2xl font-semibold border-[1px] w-full p-5 bg-zinc-100 text-black rounded-xl flex flex-col items-center">
+            <label
+              htmlFor="profileImage"
+              className="cursor-pointer text-red-500 flex items-center gap-2"
+            >
+              <i className="mt-1 fi fi-sr-file-edit"></i>
+              <span>Upload Profile Image</span>
+            </label>
+            <input
+              type="file"
+              id="profileImage"
+              accept="image/*"
+              className="hidden"
+              onChange={handleProfileImageUpload}
+            />
+          </div>
+        </div>
 
         <form
           className="relative w-full max-w-[800px] h-full flex flex-col gap-5"
@@ -405,7 +395,6 @@ const Account = () => {
 
           <hr className="bg-black w-full border-[1px] border-zinc-400" />
         </form>
-
 
         <form
           ref={passwordForm}

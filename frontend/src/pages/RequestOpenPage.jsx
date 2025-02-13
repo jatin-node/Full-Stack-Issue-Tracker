@@ -11,7 +11,7 @@ import { toast, Toaster } from "react-hot-toast";
 
 const RequestOpenPage = () => {
   const { auth } = useContext(AuthContext);
-  const { ticketId } = useParams(); // Adjusted to properly use `ticketId` param
+  const { ticketId } = useParams();
   const [issueData, setIssueData] = useState({});
   const [isImageModalOpen, setIsImageModalOpen] = useState(false); 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false); 
@@ -105,7 +105,7 @@ const RequestOpenPage = () => {
   useEffect(() => {
     fetchUsers();
     fetchIssue();
-  }, [ticketId]); // Depend on ticketId to re-fetch if it changes
+  }, [ticketId]);
 
   return issueData ? (
     <AnimationWrapper>

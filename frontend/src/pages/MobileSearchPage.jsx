@@ -7,8 +7,8 @@ import RequestCard from "../components/RequestCard";
 const MobileSearchPage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [requests, setRequests] = useState([]);
-  const [loading, setLoading] = useState(false); // For loading state
-  const [error, setError] = useState(""); // For error handling
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const debounce = (func, delay) => {
     let timer;
@@ -26,7 +26,6 @@ const MobileSearchPage = () => {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + `/search/requests?term=${searchTerm}`
       );
-      console.log(response.data);
       setRequests(response.data);
     } catch (error) {
       console.error("Error fetching requests:", error);

@@ -21,8 +21,6 @@ router.post("/update/profile/image", upload.single("image"), isloggedin, async (
     if (!req.file) {
       return res.status(400).json({ message: "Image is required" });
     }
-
-    // Assuming Cloudinary URL is stored in req.file.path
     const image = req.file.path; // Cloudinary URL
 
     const updatedUser = await userModel.findByIdAndUpdate(
@@ -46,18 +44,15 @@ router.post("/update/profile/image", upload.single("image"), isloggedin, async (
 
 router.post("/get/users", isloggedin, async function (req, res) {
   const { role, status , _id } = req.body; // Filtering by role and status (if provided)
-
   try {
     const query = {};
     if (role) {
       query["role"] = role;
     }
     if (status) {
-      query["status"] = status; // Assuming you have a `status` field in the User model (e.g., active, inactive)
+      query["status"] = status;
     }
-    if (_id) query["_id"] = _id; // Only filter by reportedBy if it's provided
-
-    console.log("Query being used:", query);
+    if (_id) query["_id"] = _id;
 
     const users = await userModel.find(query).select("-password"); // Exclude password from the response
     res.status(200).json(users);
@@ -69,7 +64,6 @@ router.post("/get/users", isloggedin, async function (req, res) {
 
 router.post("/get/requests", async function (req, res) {
   const { status, role, _id } = req.body;
-  console.log("Received request with status:", status, ", role:", role, "and reportedBy:", _id);
   try {
     const query = {};
     if (role) {
@@ -81,8 +75,7 @@ router.post("/get/requests", async function (req, res) {
       }
     }
     if (status) query["issueDetails.status"] = status;
-    if (_id) query["reportedBy"] = _id; // Only filter by reportedBy if it's provided
-    console.log("Query being used:", query);
+    if (_id) query["reportedBy"] = _id;
 
     const requests = await issueModel
       .find(query)
@@ -194,7 +187,6 @@ router.post("/get/user/issue", isloggedin, async (req, res) => {
     }
 
     const userIssues = await issueModel.find({ issueTicket }).populate("assignedTo", "personalInfo.username");
-    console.log(userIssues);
 
     res.status(200).json(userIssues);
   } catch (error) {
@@ -202,9 +194,6 @@ router.post("/get/user/issue", isloggedin, async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
-
-
 
 router.post("/search/requests", async (req, res) => {
   const { term } = req.query; // Get the search term from the query params

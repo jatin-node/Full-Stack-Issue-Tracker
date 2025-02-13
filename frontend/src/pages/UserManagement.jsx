@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../store/actions/requestsAction"; // Replace with your actual action
+import { fetchUsers } from "../store/actions/requestsAction";
 import { useNavigate } from "react-router-dom";
 import AnimationWrapper from "../components/AnimationWrapper";
 
@@ -9,8 +9,8 @@ const UserManagementPage = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
 
-  const allUsers = useSelector((state) => state.requestsReducer.users); // Assuming all users are here
-  console.log(allUsers);
+  const allUsers = useSelector((state) => state.requestsReducer.users);
+
   // Filter users based on search term
   const filteredUsers = allUsers?.filter(
     (user) =>
@@ -20,14 +20,13 @@ const UserManagementPage = () => {
       user.personalInfo.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Handle row click to navigate to user details page
   const handleRowClick = (userId, username) => {
     navigate(`/user/${userId}/${username}/details`); // Navigate to user detail page
   };
 
   // Fetch users on component mount
   useEffect(() => {
-    dispatch(fetchUsers()); // Fetch users when component mounts
+    dispatch(fetchUsers());
   }, [dispatch]);
 
   return allUsers ? (

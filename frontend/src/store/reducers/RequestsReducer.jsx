@@ -22,7 +22,6 @@ export const RequestsSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setRequests, setUsers } = RequestsSlice.actions;
 
 

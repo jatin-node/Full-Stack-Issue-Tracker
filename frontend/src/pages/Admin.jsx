@@ -22,7 +22,6 @@ const AdminPage = () => {
   const allInProgressRequests = filterRequestsByStatus(allRequests, "in-progress");
   const allResolvedRequests = filterRequestsByStatus(allRequests, "resolved");
 
-  // The openRequest function should now be inside the click handler to ensure it's triggered by a user event
   const openRequest = (ticket, title) => {
     navigate(`/request/${auth.user._id}/${slugify(title)}/ticket/${ticket}`);
   };

@@ -9,28 +9,17 @@ const router = express.Router();
 
 router.post("/create-category", isloggedin, async (req, res) => {
   const { role, categoryName, tags } = req.body;
-  // console.log(req.user);
   try {
-    // const user = await userModel
-    //   .findOne({ "personalInfo.email": req.user.personalInfo.email })
-    //   .select("role");
-
-    // if (!user) {
-    //   return res.status(404).send("User not found");
-    // }
-    
     let rolefind = await roleModel.findOne({ roleName: role });
     if (!rolefind) {
       rolefind = await roleModel.create({
         roleName: role,
       });
     }
-
     const category = await categoryModel.create({
       categoryName,
       roleId: rolefind._id,
     });
-
     const subcategories = await Promise.all(
       tags.map((name) =>
         subcategoryModel.create({
@@ -39,7 +28,6 @@ router.post("/create-category", isloggedin, async (req, res) => {
         })
       )
     );
-
     res.status(201).send({ category, subcategories });
   } catch (error) {
     res.status(500).send(error.message);
@@ -48,23 +36,17 @@ router.post("/create-category", isloggedin, async (req, res) => {
 
 router.post("/update/issue", async (req, res) => {
   const { issueTicket, status, assignedTo } = req.body;
-
   if (!issueTicket || !status) {
     return res.status(400).json({ success: false, message: "Missing required fields" });
   }
-
   try {
-    console.log("working...");
     // Find the issue by ticket
     const issue = await issueModel.findOne({ issueTicket });
-
     if (!issue) {
       return res.status(404).json({ success: false, message: "Issue not found" });
     }
 
-    // Update status
     issue.issueDetails.status = status;
-
     // Update assignedTo only if a valid ObjectId is provided
     if (assignedTo) {
       const user = await userModel.findById(assignedTo);
@@ -75,7 +57,6 @@ router.post("/update/issue", async (req, res) => {
     } else {
       issue.assignedTo = null;
     }
-
     await issue.save();
     res.status(200).json({ success: true, message: "Issue updated successfully" });
   } catch (error) {
@@ -86,7 +67,7 @@ router.post("/update/issue", async (req, res) => {
 
 router.post("/get/users", async (req, res) => {
   try {
-    const users = await userModel.find({}, "personalInfo.username _id"); // Fetch only necessary fields
+    const users = await userModel.find({}, "personalInfo.username _id");
     res.status(200).json(users);
   } catch (error) {
     console.error(error);
@@ -106,7 +87,6 @@ router.get("/get/user/:userId", async (req, res) => {
     res.status(500).json({ success: false, message: "Failed to fetch user" });
   }
 });
-
 
 
 export default router;

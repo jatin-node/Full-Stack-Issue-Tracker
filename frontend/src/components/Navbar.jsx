@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../assets/logo.png";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link } from "react-router-dom"; // Import useNavigate
 import { AuthContext } from "../context/AuthContext";
 import UserNavigationPanel from "./UserNavigationPanel";
 import axios from "axios";
@@ -16,7 +16,6 @@ const Navbar = () => {
   const [error, setError] = useState(""); // For error handling
   const { auth } = useContext(AuthContext);
 
-    // const title = data.issueDetails.issueTitle;
 
   // Debounce function to limit API calls
   const debounce = (func, delay) => {
@@ -53,7 +52,7 @@ const Navbar = () => {
   const debouncedFetchData = debounce((term) => {
     if (term.trim() !== "") fetchData(term);
     else setRequests([]); // Clear results if input is empty
-  }, 500); // 500ms delay
+  }, 500);
 
   // Handle input change
   const handleSearchChange = (e) => {
@@ -94,7 +93,6 @@ const Navbar = () => {
                   >
                     <span className="w-48 h-full text-ellipsis line-clamp-1 overflow-hidden">{request.issueDetails.issueTitle || "No Title Available"}</span>
                     <div className="flex flex-col items-end">
-                      {/* <span className="">{request.category.categoryName}</span> */}
                       <span className="text-sm text-zinc-400">@{request.reportedBy?.personalInfo?.username}</span>
                     </div>
                   </Link>
@@ -152,28 +150,6 @@ const Navbar = () => {
                   </button>
                   {userNavPanel && <UserNavigationPanel />}
                 </div>
-
-              {/* <div
-                onClick={() => setIsClicked(!isclicked)}
-                className=" relative text-xl px-5 pr-10 py-2 bg-blue-500 text-white border-2 border-blue-500 rounded-md hover:bg-blue-600 "
-              >
-                <span>{auth.user.username}</span>
-                <i
-                  className={`absolute right-2 bottom-1 ${
-                    isclicked ? "fi fi-rr-caret-up" : "fi fi-rr-caret-down"
-                  }`}
-                ></i>
-                {isclicked && <UserNavigationPanel />}
-              </div> */}
-
-
-
-              {/* <button
-              onClick={signOut}
-              className="hidden sm:block text-xl px-4 py-2 bg-red-500 text-white border-2 border-red-500 rounded-md hover:bg-red-600 "
-            >
-              <h1 className=" font-semibold">Sign Out</h1>
-            </button> */}
             </>
           ) : (
             <Link
@@ -184,36 +160,6 @@ const Navbar = () => {
             </Link>
           )}
         </div>
-        {/* <div>
-        <img className="w-full h-full object-cover" src={Logo} alt="Logo" />
-      </div>
-
-      {auth.token ? (
-        <>
-          <div className="relative">
-            <button onBlur={handleblur} onClick={()=>setuserNavPanel(!userNavPanel)} className="flex justify-between items-center px-5 py-3 w-[150px] border-[1px] border-zinc-400 rounded-md hover:border-2 hover:border-zinc-800">
-              <span>{auth.user.username}</span>
-              <span className="mt-1">
-                <i className={`${userNavPanel ? "fi fi-rr-caret-up" : "fi fi-rr-caret-down"}`}></i>
-              </span>
-            </button>
-            {userNavPanel && <UserNavigationPanel />}
-          </div>
-        </>
-      ) : (
-        <div className="flex gap-5 text-white">
-          <Link to="/sign-in">
-            <button className="px-4 py-2 rounded-xl hover:bg-black bg-zinc-800">
-              Sign-up
-            </button>
-          </Link>
-          <Link className="hidden sm:block" to="/log-in">
-            <button className="px-4 py-2 rounded-xl hover:bg-black bg-zinc-800">
-              Log-in
-            </button>
-          </Link>
-        </div>
-      )} */}
       </div>
     </AnimationWrapper>
   );

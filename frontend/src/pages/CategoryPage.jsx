@@ -8,7 +8,7 @@ import { Toaster, toast } from "react-hot-toast";
 const CategoryPage = () => {
   const categoryForm = useRef();
   const [tags, setTags] = useState([]);
-  const [role, setRole] = useState(""); // New state to manage the role
+  const [role, setRole] = useState("");
   const tagsLimit = 10;
 
   const handleKeyDown = (e) => {
@@ -26,7 +26,7 @@ const CategoryPage = () => {
     const formData = {
       categoryName: categoryForm.current.elements.categoryName.value,
       tags: tags,
-      role: role, // Add role to form data
+      role: role,
     };
     console.log(formData);
     try {
@@ -35,7 +35,7 @@ const CategoryPage = () => {
         formData,
         { withCredentials: true }
       );
-      console.log(response.data);
+      
       // Reset form and tags state after successful submission
       categoryForm.current.reset();
       setTags([]);

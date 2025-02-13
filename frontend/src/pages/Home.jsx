@@ -7,8 +7,6 @@ const Home = () => {
   const { auth } = useContext(AuthContext);
   return (
     <div>
-      {/* <EmployeePage type="category" /> */}
-      {/* {auth?.user?.role === "employee" && <EmployeePage type={true} />} */}
       {auth?.user?.role === "employee" && <EmployeePage />}
       {auth?.user?.role === "admin" && <Admin />}
     </div>

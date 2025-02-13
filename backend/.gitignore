@@ -3,7 +3,7 @@
 
 # Environment variables file
 .env
-
+request.rest
 # Logs
 *.log
 npm-debug.log*

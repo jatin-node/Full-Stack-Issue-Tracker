@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import axios from "axios";
 import InputBox from "../components/InputBox";
 import Tag from "../components/Tag";
-import banner from "../assets/images/banner.png";
+import banner from "../assets/images/Banner.png";
 import { Toaster, toast } from "react-hot-toast";
 
 const CategoryPage = () => {

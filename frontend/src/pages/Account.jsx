@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import InputBox from "../components/InputBox";
 import { toast, Toaster } from "react-hot-toast";
 import { passwordRegex } from "../utils/validation";
-import { signOut } from "../utils/SignOut";
+import { signOut } from "../utils/signOut.js";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 

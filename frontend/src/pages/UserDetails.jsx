@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchUsers } from "../store/actions/requestsAction";
 import GetDay from "../components/GetDay";
 import AnimationWrapper from "../components/AnimationWrapper";
+import { AuthContext } from "../context/AuthContext";
 
 const UserDetails = () => {
+  const { auth } = useContext(AuthContext);
+
   const { userId } = useParams();
   const dispatch = useDispatch();
   const users = useSelector((state) => state.requestsReducer.users);

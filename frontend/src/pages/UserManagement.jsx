@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../store/actions/requestsAction";
 import { useNavigate } from "react-router-dom";
 import AnimationWrapper from "../components/AnimationWrapper";
+import { AuthContext } from "../context/AuthContext";
 
 const UserManagementPage = () => {
+  const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");

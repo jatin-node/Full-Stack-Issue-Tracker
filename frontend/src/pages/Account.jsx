@@ -42,7 +42,7 @@ const Account = () => {
         {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${auth.token}}`,
+            Authorization: `Bearer ${auth.token}`,
             "Content-Type": "application/json",
           },
         }
@@ -84,7 +84,7 @@ const Account = () => {
         {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${auth.token}}`,
+            Authorization: `Bearer ${auth.token}`,
             "Content-Type": "application/json",
           },
         }
@@ -123,7 +123,7 @@ const Account = () => {
         {
           withCredentials: true,
           headers: {
-            Authorization: `Bearer ${auth.token}}`,
+            Authorization: `Bearer ${auth.token}`,
             "Content-Type": "application/json",
           },
         }
@@ -154,7 +154,7 @@ const Account = () => {
         formData,
         {
           headers: {
-            Authorization: `Bearer ${auth.token}}`,
+            Authorization: `Bearer ${auth.token}`,
             "Content-Type": "multipart/form-data",
           },
           withCredentials: true,

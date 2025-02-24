@@ -37,6 +37,9 @@ const Auth = ({ type }) => {
         formData,
         {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
       const { token, user } = response.data;

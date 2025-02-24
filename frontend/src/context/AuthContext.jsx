@@ -4,12 +4,21 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(() => {
-    const savedAuth = localStorage.getItem("auth");
-    return savedAuth ? JSON.parse(savedAuth) : { user: null };
+    try {
+      const savedAuth = localStorage.getItem("auth");
+      return savedAuth ? JSON.parse(savedAuth) : { token: null, user: null };
+    } catch (error) {
+      console.error("Error parsing auth data from localStorage:", error);
+      return { token: null, user: null };
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem("auth", JSON.stringify(auth));
+    if (auth && auth.token) {
+      localStorage.setItem("auth", JSON.stringify(auth));
+    } else {
+      localStorage.removeItem("auth"); // Clear storage if no valid auth
+    }
   }, [auth]);
 
   return (

@@ -16,17 +16,19 @@ import UserDetails from "./pages/UserDetails";
 
 function App() {
   const { auth } = useContext(AuthContext);
-  const isLoggedIn = !!auth.token;
+  const isLoggedIn = auth && auth.token; // Ensure auth exists before accessing properties
   const location = useLocation(); // Get the current location
 
-
   return (
-    <>
     <div className="relative h-screen w-screen">
       <div className="h-full w-full overflow-auto">
-      {location.pathname !== "/dashboard/search" && <Navbar />}
-      <Routes>
-          <Route path="/" element={isLoggedIn ? <Navigate to={`/user/${auth.user.username}`} /> : <Navigate to="/sign-in" />} />
+        {/* Navbar should not be shown on /dashboard/search */}
+        {location.pathname !== "/dashboard/search" && <Navbar />}
+
+        <Routes>
+          {/* Redirect user based on authentication status */}
+          <Route path="/" element={isLoggedIn ? <Navigate to={`/user/${auth.user?.username}`} replace /> : <Navigate to="/sign-in" replace />} />
+
           <Route path="/sign-in" element={<Auth type="sign-in" />} />
           <Route path="/log-in" element={<Auth type="log-in" />} />
           <Route path="/details" element={<Auth type="details" />} />
@@ -34,7 +36,6 @@ function App() {
           <Route path="/user/:user" element={<Home />} />
           <Route path="/user/:user/request" element={<EmployeeRequestPage type={true} />} />
           <Route path="/user/:user/request/:categoryName/:CategoryId" element={<EmployeeRequestPage type={false} />} /> 
-          
           
           <Route path="user/:user/manage" element={<UserManagement />} /> 
           <Route path="user/:user/my-issues" element={<MyIssues />} />
@@ -47,9 +48,10 @@ function App() {
           <Route path="/request/:id/:title/ticket/:ticketId" element={<RequestOpenPage />} /> 
         </Routes>
       </div>
+      
+      {/* Show MobileBottomNav only if the user is logged in */}
       {isLoggedIn && <MobileBottomNav />}
     </div>
-    </>
   );
 }
 

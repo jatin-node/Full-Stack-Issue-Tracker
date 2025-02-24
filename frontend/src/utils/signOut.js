@@ -2,15 +2,16 @@ import axios from "axios";
 
 export const signOut = async (setAuth, navigate) => {
   try {
-    const response = await axios.get(import.meta.env.VITE_BACKEND_URL + "/logout", {
-      withCredentials: true,
+    await axios.post(import.meta.env.VITE_BACKEND_URL + "/logout", {}, {
+      withCredentials: true, // Ensures cookies are sent
     });
 
-    localStorage.removeItem("auth"); // Remove the auth object from localStorage
-
+    // Clear localStorage and auth state
+    localStorage.removeItem("auth"); 
+    delete axios.defaults.headers.common["Authorization"];
     setAuth({ token: null });
-    delete axios.defaults.headers.common["Authorization"]; // Clear the Authorization header
-    navigate("/"); // Navigate to the root route
+
+    navigate("/"); // Redirect to home page
   } catch (error) {
     console.error("Error during sign out:", error);
   }

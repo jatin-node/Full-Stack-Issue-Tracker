@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 
 router.post("/sign-in", registerUser);
 router.post("/log-in", loginUser);
-router.get("/logout", isloggedin, logOutUser);
+router.post("/logout", isloggedin, logOutUser);
 
 router.post("/update/profile/image", upload.single("image"), isloggedin, async (req, res) => {
   try {

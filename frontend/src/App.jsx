@@ -16,7 +16,7 @@ import UserDetails from "./pages/UserDetails";
 
 function App() {
   const { auth } = useContext(AuthContext);
-  const isLoggedIn = !!auth.user;
+  const isLoggedIn = !!auth.token;
   const location = useLocation(); // Get the current location
 
 

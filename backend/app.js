@@ -18,6 +18,8 @@ import employeeRouter from "./routes/employeeRouter.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+app.set("trust proxy", 1);
+
 // Enable CORS for all routes
 let isProduction = process.env.NODE_ENV === "production";
 app.use(

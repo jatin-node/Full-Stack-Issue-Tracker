@@ -47,7 +47,6 @@ const Account = () => {
           },
         }
       );
-      console.log(userDetails);
       setUserDetails(response.data); // Set the fetched user details
     } catch (error) {
       console.log(error);

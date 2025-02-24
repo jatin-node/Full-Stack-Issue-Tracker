@@ -47,6 +47,7 @@ const Account = () => {
           },
         }
       );
+      console.log(userDetails);
       setUserDetails(response.data); // Set the fetched user details
     } catch (error) {
       console.log(error);
@@ -119,7 +120,13 @@ const Account = () => {
       axios.post(
         import.meta.env.VITE_BACKEND_URL + "/update/password",
         { password: formData.password },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${auth.token}}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       toast.success("Password updated successfully!");
       setEdit(false); // Disable editing after submit

@@ -27,7 +27,7 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchRequests());
+    dispatch(fetchRequests(auth.token, null, null, null));
   }, [dispatch]);
 
   return (

@@ -62,7 +62,7 @@ router.post("/get/users", isloggedin, async function (req, res) {
   }
 });
 
-router.post("/get/requests", async function (req, res) {
+router.post("/get/requests",isloggedin,  async function (req, res) {
   const { status, role, _id } = req.body;
   try {
     const query = {};

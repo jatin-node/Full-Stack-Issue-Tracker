@@ -21,7 +21,13 @@ const EmployeeRequestPage = ({ type }) => {
 
   const fetchData = async (url, setState, payload = {}) => {
     try {
-      const response = await axios.post(url, payload);
+      const response = await axios.post(url, payload, {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+          "Content-Type": "application/json",
+        },
+      });
       setState(response.data);
     } catch (error) {
       console.error(`Error fetching data from ${url}:`, error);

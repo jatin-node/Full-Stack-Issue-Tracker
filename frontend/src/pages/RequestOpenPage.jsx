@@ -52,7 +52,12 @@ const RequestOpenPage = () => {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/get/user/issue",
         { issueTicket: ticketId },
-        { withCredentials: true }
+        { withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+            "Content-Type": "application/json",
+          },
+         }
       );
       const singleissue = response.data[0];
       setIssueData(singleissue);

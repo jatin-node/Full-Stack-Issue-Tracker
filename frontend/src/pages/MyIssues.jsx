@@ -46,10 +46,10 @@ const MyIssues = () => {
 
   useEffect(() => {
     if (auth.user.role == "admin") {
-      dispatch(fetchRequests());
+      dispatch(fetchRequests(auth.token, null, null, null));
     }
     if (auth.user.role == "employee") {
-      dispatch(fetchRequests(null, null, auth.user._id));
+      dispatch(fetchRequests(auth.token, null, null, auth.user._id));
     }
 
     document.addEventListener("mousedown", handleOutsideClick);
@@ -117,7 +117,6 @@ const MyIssues = () => {
               allRequests.map((request, index) => (
                 <AnimationWrapper
                   key={index}
-                  transition={{ duration: 1, delay: index * 0.2 }}
                 >
                   <RequestCard data={request} />
                 </AnimationWrapper>

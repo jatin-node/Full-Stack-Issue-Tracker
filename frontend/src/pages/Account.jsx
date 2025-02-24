@@ -9,7 +9,7 @@ import { AuthContext } from "../context/AuthContext";
 
 const Account = () => {
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
+  const { auth, setAuth } = useContext(AuthContext);
 
   const [edit, setEdit] = useState(false);
   const [passwordEdit, setpasswordEdit] = useState(false);
@@ -39,7 +39,13 @@ const Account = () => {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/get/user/details",
         {},
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${auth.token}}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       setUserDetails(response.data); // Set the fetched user details
     } catch (error) {
@@ -74,7 +80,13 @@ const Account = () => {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/update/user/details",
         userDetails,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${auth.token}}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
 
       toast.success("Account details updated successfully!");
@@ -134,7 +146,10 @@ const Account = () => {
         import.meta.env.VITE_BACKEND_URL + "/update/profile/image",
         formData,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            Authorization: `Bearer ${auth.token}}`,
+            "Content-Type": "multipart/form-data",
+          },
           withCredentials: true,
         }
       );

@@ -34,7 +34,13 @@ const IssueDetails = ({ selectedRoleOption, selectedCategoryOption }) => {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/employee/subcategory`,
         { categoryId: selectedCategoryOption },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       const subcategories = response.data.subCategories.map((c) => ({
         label: c.subcategoryName,
@@ -103,19 +109,25 @@ const IssueDetails = ({ selectedRoleOption, selectedCategoryOption }) => {
         formData,
         {
           withCredentials: true,
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${auth.token}`,
+          },
         }
       );
       toast.dismiss(toastId);
       toast.success("Issue submitted successfully!");
-      navigate(`/request/${auth.user._id}/${slugify(elements.issueTitle.value.trim())}/ticket/${ticket}`);
+      navigate(
+        `/request/${auth.user._id}/${slugify(
+          elements.issueTitle.value.trim()
+        )}/ticket/${ticket}`
+      );
 
       detailsForm.current.reset();
       setDesc("");
       setFileNames([]);
       setFiles([]);
       setSelectedSubcategory("");
-      
     } catch (error) {
       console.error("Error submitting issue:", error);
       toast.dismiss(toastId);

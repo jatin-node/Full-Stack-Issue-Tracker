@@ -38,7 +38,6 @@ const Navbar = () => {
     setError("");
     try {
       const response = await axios.post(import.meta.env.VITE_BACKEND_URL + `/search/requests?term=${searchTerm}`);
-      console.log(response.data);
       setRequests(response.data);
     } catch (error) {
       console.error("Error fetching requests:", error);

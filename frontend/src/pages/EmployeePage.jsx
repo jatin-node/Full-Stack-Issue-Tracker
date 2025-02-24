@@ -30,7 +30,7 @@ const EmployeePage = ({ type }) => {
   const allReslovedRequests = filterRequestsByStatus(allRequests, "resolved");
 
   useEffect(() => {
-    dispatch(fetchRequests(null, null, auth.user._id));
+    dispatch(fetchRequests(auth.token, null, null, auth.user._id));
   }, [dispatch]);
   return (
     <AnimationWrapper>

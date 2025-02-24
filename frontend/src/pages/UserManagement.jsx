@@ -26,7 +26,7 @@ const UserManagementPage = () => {
 
   // Fetch users on component mount
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(fetchUsers(auth.token, null, null, null));
   }, [dispatch]);
 
   return allUsers ? (

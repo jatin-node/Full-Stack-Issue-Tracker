@@ -1,11 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import axios from "axios";
 import InputBox from "../components/InputBox";
 import Tag from "../components/Tag";
 import banner from "../assets/images/Banner.png";
 import { Toaster, toast } from "react-hot-toast";
+import { AuthContext } from "../context/AuthContext";
 
 const CategoryPage = () => {
+  const { auth } = useContext(AuthContext);
   const categoryForm = useRef();
   const [tags, setTags] = useState([]);
   const [role, setRole] = useState("");
@@ -28,14 +30,19 @@ const CategoryPage = () => {
       tags: tags,
       role: role,
     };
-    console.log(formData);
     try {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/admin/create-category",
         formData,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${auth.token}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
-      
+
       // Reset form and tags state after successful submission
       categoryForm.current.reset();
       setTags([]);
@@ -87,7 +94,6 @@ const CategoryPage = () => {
             inputClassname="border-[1px] border-zinc-200 rounded-md pl-2 "
           />
         </div>
-        
 
         <div>
           <p className="text-zinc-800 mb-2">Sub-Categories-</p>

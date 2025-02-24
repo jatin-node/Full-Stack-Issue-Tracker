@@ -5,6 +5,9 @@ export const signOut = async (setAuth, navigate) => {
     const response = await axios.get(import.meta.env.VITE_BACKEND_URL + "/logout", {
       withCredentials: true,
     });
+
+    localStorage.removeItem("auth"); // Remove the auth object from localStorage
+
     setAuth({ token: null });
     delete axios.defaults.headers.common["Authorization"]; // Clear the Authorization header
     navigate("/"); // Navigate to the root route

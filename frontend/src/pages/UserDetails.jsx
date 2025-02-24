@@ -11,7 +11,7 @@ const UserDetails = () => {
   const users = useSelector((state) => state.requestsReducer.users);
 
   useEffect(() => {
-    dispatch(fetchUsers(null, null, userId));
+    dispatch(fetchUsers(auth.token, null, null, userId));
   }, [dispatch]);
   return users ? (
     <AnimationWrapper>

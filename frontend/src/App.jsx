@@ -19,7 +19,6 @@ function App() {
   const isLoggedIn = auth && auth.token; // Ensure auth exists before accessing properties
   const location = useLocation(); // Get the current location
 
-  console.log(auth)
 
   return (
     <div className="relative h-screen w-screen">

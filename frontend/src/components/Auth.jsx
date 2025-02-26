@@ -51,8 +51,12 @@ const Auth = ({ type }) => {
         throw new Error("User ID is missing");
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.response?.data || error.message);
+      if (error.response && error.response.status === 401) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error(error.message);
+      }
+      console.error(error);
     }
   };
 
@@ -110,15 +114,13 @@ const Auth = ({ type }) => {
 
       // Validation for empty fields
       if (!additionalData.employeeId) return toast.error("Enter Employee ID");
-      if (!additionalData.quarterNumber)
-        return toast.error("Enter Quarter Number");
+      if (!additionalData.quarterNumber) return toast.error("Enter Quarter Number");
       if (!additionalData.phone) return toast.error("Enter Phone Number");
       if (!additionalData.street) return toast.error("Enter Street");
       if (!additionalData.city) return toast.error("Enter City");
       if (!additionalData.state) return toast.error("Enter State");
       if (!additionalData.zip) return toast.error("Enter Zip Code");
-      if (!additionalData.completeAddress)
-        return toast.error("Enter Complete Address");
+      if (!additionalData.completeAddress) return toast.error("Enter Complete Address");
 
       const completeFormData = { ...formData, ...additionalData };
       serverConnect("/sign-in", completeFormData);
@@ -139,7 +141,6 @@ const Auth = ({ type }) => {
       if (!emailRegex.test(formData.email)) {
         return toast.error("Invalid email format");
       }
-
       serverConnect("/log-in", formData);
     }
   };
@@ -326,49 +327,59 @@ const Auth = ({ type }) => {
       >
         Log in
       </Link>
-      <div className="flex items-center justify-center w-full gap-2 uppercase opacity-25">
-        <hr className="w-1/2 border-black" />
-        <p>or</p>
-        <hr className="w-1/2 border-black" />
-      </div>
-      <div>
-        Don't have an account&nbsp;
-        <Link to="/" className="text-sky-600 underline ">
-          Sign In
-        </Link>
-      </div>
+      {import.meta.env.VITE_NODE_ENV === "production" ? (
+        ""
+      ) : (
+        <>
+          <div className="flex items-center justify-center w-full gap-2 uppercase opacity-25">
+            <hr className="w-1/2 border-black" />
+            <p>or</p>
+            <hr className="w-1/2 border-black" />
+          </div>
+          <div>
+            Don't have an account&nbsp;
+            <Link to="/sign-in" className="text-sky-600 underline ">
+              Sign In
+            </Link>
+          </div>
+        </>
+      )}
     </>
   );
 
   return (
     <AnimationWrapper type={type}>
       <section className="w-full mt-24 h-[calc(100vh-100px)] overflow-auto flex justify-center items-center relative bg-white md:bg-[#F8F8F8]">
-          <div className="w-[95%] absolute top-20 max-w-[500px] rounded-2xl bg-white md:shadow-lg p-5 md:p-10 -mt-10">
-            <h1
-              className={` ${type === "details" ? "hidden" : "text-4xl"} capitalize font-bold`}
-            >
-              {type === "sign-in"
-                ? "Sign Up"
-                : type === "details"
-                ? "Sign Up"
-                : "Log In"}
-            </h1>
-            <Toaster />
-            <form
-              ref={
-                type === "sign-in"
-                  ? registerForm
-                  : type === "log-in"
-                  ? logInForm
-                  : registerDetailsForm
-              }
-              className="py-10 flex items-start flex-col gap-5"
-            >
-              {type === "sign-in" && renderSignInForm()}
-              {type === "details" && renderDetailsForm()}
-              {type === "log-in" && renderLogInForm()}
-            </form>
-          </div>
+        <div className="w-[95%] absolute top-20 max-w-[500px] rounded-2xl bg-white md:shadow-lg p-5 md:p-10 -mt-10">
+          <h1
+            className={` ${
+              type === "details" ? "hidden" : "text-4xl"
+            } capitalize font-bold`}
+          >
+            {import.meta.env.VITE_NODE_ENV === "production"
+              ? "Log In"
+              : type === "sign-in"
+              ? "Sign Up"
+              : type === "details"
+              ? "Sign Up"
+              : "Log In"}
+          </h1>
+          <Toaster />
+          <form
+            ref={
+              type === "sign-in"
+                ? registerForm
+                : type === "log-in"
+                ? logInForm
+                : registerDetailsForm
+            }
+            className="py-10 flex items-start flex-col gap-5"
+          >
+            {type === "sign-in" && renderSignInForm()}
+            {type === "details" && renderDetailsForm()}
+            {type === "log-in" && renderLogInForm()}
+          </form>
+        </div>
       </section>
     </AnimationWrapper>
   );

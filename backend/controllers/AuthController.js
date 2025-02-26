@@ -68,21 +68,18 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     let { email, password } = req.body;
-    
-    if (!emailRegex.test(email)) {
-      return res.status(400).json({ error: "Invalid email format" });
-    }
-    
-    if (!passwordRegex.test(password)) {
-      return res.status(400).json({ error: "Weak password" });
-    }
 
     let user = await userModel.findOne({ "personalInfo.email": email });
-    if (!user) return res.status(401).json({ error: "You don't have an account" });
-
-    const isMatch = await bcrypt.compare(password, user.personalInfo.password);
+    if (!user) {
+      res.status(401).json({ error: "You don't have an account" });
+      return;
+    }
     
-    if (!isMatch) return res.status(401).json({ error: "Incorrect email or password" });
+    const isMatch = await bcrypt.compare(password, user.personalInfo.password);
+    if (!isMatch) {
+      res.status(401).json({ error: "Incorrect email or password" });
+      return;
+    }
 
     let token = generateToken(user);
     

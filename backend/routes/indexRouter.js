@@ -100,13 +100,16 @@ router.post("/get/user/details", isloggedin, async (req, res) => {
         .status(401)
         .json({ message: "Unauthorized: User not logged in" });
     }
+
+    const { username } = req.body;
+
     const details = await userModel.findOne({
-      "personalInfo.email": req.user.personalInfo.email,
+      "personalInfo.username": username,
     });
     if (!details) return res.status(404).json({ message: "User not found" });
     res.status(200).json(details);
   } catch (error) {
-    console.log("Error fetching details:", error);
+    console.error("Error fetching details:", error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -153,7 +156,7 @@ router.post("/update/user/details", isloggedin, async (req, res) => {
 });
 
 router.post("/update/password", isloggedin, async (req, res) => {
-  const { password } = req.body;
+  const { username, password } = req.body;
   if (!password) {
     return res.status(400).json({ message: "Password is required" });
   }
@@ -164,7 +167,7 @@ router.post("/update/password", isloggedin, async (req, res) => {
     // Hash the new password
     const hashedPassword = await bcrypt.hash(password, 10);
     const updatedUser = await userModel.findOneAndUpdate(
-      { _id: req.user._id },{
+      { "personalInfo.username": username },{
         $set: { "personalInfo.password": hashedPassword },
       },
       { new: true } // Return the updated document
@@ -186,7 +189,7 @@ router.post("/get/user/issue", isloggedin, async (req, res) => {
       return res.status(401).json({ message: "Unauthorized: User not logged in" });
     }
 
-    const userIssues = await issueModel.find({ issueTicket }).populate("assignedTo", "personalInfo.username");
+    const userIssues = await issueModel.find({ issueTicket }).populate("assignedTo", "personalInfo.username").populate("reportedBy", "personalInfo.username ");
 
     res.status(200).json(userIssues);
   } catch (error) {

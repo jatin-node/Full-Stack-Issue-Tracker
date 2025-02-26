@@ -4,11 +4,12 @@ import InputBox from "../components/InputBox";
 import { toast, Toaster } from "react-hot-toast";
 import { passwordRegex } from "../utils/validation";
 import { signOut } from "../utils/signOut.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Account = () => {
   const navigate = useNavigate();
+  const { user } = useParams();
   const { auth, setAuth } = useContext(AuthContext);
 
   const [edit, setEdit] = useState(false);
@@ -38,7 +39,7 @@ const Account = () => {
     try {
       const response = await axios.post(
         import.meta.env.VITE_BACKEND_URL + "/get/user/details",
-        {},
+        {username: user},
         {
           withCredentials: true,
           headers: {
@@ -49,7 +50,7 @@ const Account = () => {
       );
       setUserDetails(response.data); // Set the fetched user details
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -92,7 +93,7 @@ const Account = () => {
       toast.success("Account details updated successfully!");
       setEdit(false); // Disable editing after submit
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error.response?.data || error.message);
     }
   };
@@ -118,7 +119,7 @@ const Account = () => {
       }
       axios.post(
         import.meta.env.VITE_BACKEND_URL + "/update/password",
-        { password: formData.password },
+        { username: user, password: formData.password },
         {
           withCredentials: true,
           headers: {
@@ -131,7 +132,7 @@ const Account = () => {
       setEdit(false); // Disable editing after submit
       setpasswordEdit(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error.response?.data || error.message);
     }
   };
@@ -179,7 +180,7 @@ const Account = () => {
 
   useEffect(() => {
     fetchUserDetails();
-  }, []);
+  }, [user]);
 
   return userDetails ? (
     <div className="w-full my-24 flex flex-col items-center gap-10 p-5">
@@ -255,7 +256,7 @@ const Account = () => {
                   Email
                 </label>
               </div>
-              <div className="w-full relative">
+              <div className={`w-full relative ${auth.user.role === "admin" ? "block" : "hidden"}`}>
                 <InputBox
                   type="text"
                   name="employeeId"

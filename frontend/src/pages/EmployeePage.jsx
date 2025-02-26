@@ -14,7 +14,7 @@ import { fetchRequests } from "../store/actions/requestsAction";
 import RequestCard from "../components/RequestCard";
 import NoDataMessage from "../components/NoDataMessage";
 
-const EmployeePage = ({ type }) => {
+const EmployeePage = () => {
   const { auth } = useContext(AuthContext);
   const dispatch = useDispatch();
 

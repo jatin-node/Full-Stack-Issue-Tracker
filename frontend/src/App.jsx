@@ -13,6 +13,7 @@ import RequestOpenPage from "./pages/RequestOpenPage";
 import MobileSearchPage from "./pages/MobileSearchPage";
 import UserManagement from "./pages/UserManagement";
 import UserDetails from "./pages/UserDetails";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   const { auth } = useContext(AuthContext);
@@ -28,7 +29,7 @@ function App() {
 
         <Routes>
           {/* Redirect user based on authentication status */}
-          <Route path="/" element={isLoggedIn ? <Navigate to={`/user/${auth.user?.username}`} replace /> : <Navigate to="/sign-in" replace />} />
+          <Route path="/" element={isLoggedIn ? <Navigate to={`/user/${auth.user?.username}`} replace /> : <Navigate to="/log-in" replace />} />
 
           <Route path="/sign-in" element={<Auth type="sign-in" />} />
           <Route path="/log-in" element={<Auth type="log-in" />} />
@@ -47,6 +48,8 @@ function App() {
 
           <Route path="/dashboard/search" element={<MobileSearchPage />} /> 
           <Route path="/request/:id/:title/ticket/:ticketId" element={<RequestOpenPage />} /> 
+
+          <Route path="*" element={<PageNotFound />}/>
         </Routes>
       </div>
       

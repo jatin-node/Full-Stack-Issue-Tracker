@@ -477,7 +477,7 @@ const Account = () => {
           </div>
         </form>
 
-        <div className="w-full h-full shadow-lg border-[1px] border-zinc-400 p-5 flex flex-col items-start gap-5">
+        <div className={`w-full h-full shadow-lg border-[1px] border-zinc-400 p-5 flex flex-col items-start gap-5 ${auth.user.role === "admin" ? "hidden" : "block"}`}>
           <button
             className="bg-red-500 hover:bg-red-600 text-white px-5 py-3 font-semibold capitalize"
             onClick={() => signOut(setAuth, navigate)}
